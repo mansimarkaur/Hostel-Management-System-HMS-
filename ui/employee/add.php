@@ -56,6 +56,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'perPhoto' => $perPhoto,
                     'isActive' => 'Y'
                 );
+                if($handyCam->parseAppDate($_POST['doj']) > date('1998-01-01')){
+                    $msg = "Invalid DOB";
+                }
+                else{
                 $result = $db->insertData("employee",$data);
                 if($result>0) {
                     $userPass = md5("hms2015".$_POST['password']);
@@ -93,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 {
                     echo '<script type="text/javascript"> alert("' . $result . '");</script>';
                 }
-            } else {
+            }} else {
                 echo '<script type="text/javascript"> alert("' . $perPhoto . '");</script>';
             }
         } else {
@@ -303,6 +307,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="col-lg-12">
                                 <div class="col-lg-5"></div>
                                 <div class="col-lg-2">
+                                    <label id="loginMsg" class="red"><?php echo $msg ?></label>
                                     <div class="form-group ">
                                         <button type="submit" class="btn btn-success" name="btnSave" ><i class="fa fa-2x fa-check"></i>Save</button>
                                     </div>

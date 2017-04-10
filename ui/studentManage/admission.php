@@ -34,10 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($msg = "true") {
             $userIds = $db->getAutoId("U");
             $flup = new fileUploader\fileUploader();
-            $perPhoto = $flup->upload("/hms/files/photos/",$_FILES['perPhoto'], $userIds[1]);
+            //$perPhoto = $flup->upload("/hms/files/photos/",$_FILES['perPhoto'], $userIds[1]);
            // var_dump($perPhoto);
             $handyCam=new \handyCam\handyCam();
-           if (strpos($perPhoto, 'Error:') === false) {
+           //if (strpos($perPhoto, 'Error:') === false) {
                 $dateNow=date("Y-m-d");
                 $data = array(
                     'userId' => $userIds[1],
@@ -63,11 +63,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'localGuardianCell' => $_POST['localGuardianCell'],
                     'presentAddress' => $_POST['presentAddress'],
                     'parmanentAddress' =>$_POST['parmanentAddress'],
-                    'perPhoto' => $perPhoto,
+                    //'perPhoto' => $perPhoto,
                     'admitDate' => $dateNow,
                     'isActive' => 'Y'
                 );
-                $userId = $userIds[1];
                 $userGroupId = "UG004";
                 $name = $_POST['name'];
                 $studentId = $_POST['stdId'];
@@ -90,10 +89,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $localGuardianCell = $_POST['localGuardianCell'];
                 $presentAddress = $_POST['presentAddress'];
                 $parmanentAddress =$_POST['parmanentAddress'];
-                $perPhoto = $perPhoto;
+                //$perPhoto = $perPhoto;
                 $admitDate = $dateNow;
                 $isActive = 'Y';
-                $sql = "INSERT into studentinfo(userId, userGroupId, name, studentId, cellNo, email, nameofInst, program, batchNo, gender, dob, bloodGroup, nationalId, nationality, passportNo, fatherName, motherName, fatherCellNo, motherCellNo, localGuardian, localGuradianCell, presentAddress, permanentAddress, perPhoto, admitDate, isActive) VALUES('$userId', '$userGroupId', '$name', '$studentId', '$cellNo', '$email', '$nameofInst', '$program', '$batchNo', '$gender', '$dob', '$bloodGroup', '$nationalId', '$nationality', '$passportNo', '$fatherName', '$motherName', '$fatherCellNo', '$motherCellNo', '$localGuardian', '$localGuradianCell', '$presentAddress', '$permanentAddress', '$perPhoto', '$admitDate', '$isActive')";
+                if($dob < '1994-01-01' || $dob > date('Y-m-d'){
+                    $msg = "Enter valid DOB";
+                }
+                $sql = "INSERT into studentinfo(userId, userGroupId, name, studentId, cellNo, email, nameofInst, program, batchNo, gender, dob, bloodGroup, nationalId, nationality, passportNo, fatherName, motherName, fatherCellNo, motherCellNo, localGuardian, localGuradianCell, presentAddress, parmanentAddress, admitDate, isActive) VALUES('$userIds[1]', '$userGroupId', '$name', '$studentId', '$cellNo', '$email', '$nameofInst', '$program', '$batchNo', '$gender', '$dob', '$bloodGroup', '$nationalId', '$nationality', '$passportNo', '$fatherName', '$motherName', '$fatherCellNo', '$motherCellNo', '$localGuardian', '$localGuradianCell', '$presentAddress', '$parmanentAddress', '$admitDate', '$isActive')";
                 mysql_query($sql);
                 $result=mysql_insert_id().mysql_error();
                 //$result = $db->insertData("studentinfo",$data);
@@ -137,9 +139,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 {
                     echo '<script type="text/javascript"> alert("' . $result . '");</script>';
                 }
-            } else {
-                echo '<script type="text/javascript"> alert("' . $perPhoto . '");</script>';
-            }
         } else {
             echo '<script type="text/javascript"> alert("' . $msg . '");</script>';
         }
@@ -244,7 +243,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <div class="col-lg-4">
+                                    <!-- <div class="col-lg-4">
                                         <div class="form-group ">
                                             <label>Photo</label>
                                             <div class="input-group">
@@ -253,7 +252,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             </div>
                                         </div>
 
-                                    </div>
+                                    </div> -->
                                     <div class="col-lg-4">
                                         <div class="form-group ">
                                             <label>Name Of Institute</label>
@@ -465,7 +464,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-
                             <div class="row">
                                 <div class="col-lg-12">
                                     <label id="lblmsg" class="red"></label>
@@ -475,6 +473,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="col-lg-12">
                                     <div class="col-lg-5"></div>
                                     <div class="col-lg-2">
+                                        <label id="loginMsg" class="red"><?php echo $msg ?></label>
                                         <div class="form-group ">
                                             <button type="submit" class="btn btn-success" name="btnSave" ><i class="fa fa-2x fa-check"></i>Save</button>
                                         </div>
