@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'userId' => $userIds[1],
                     'userGroupId' => "UG004",
                     'name' => $_POST['name'],
-                    'studentId' => $_POST['stdId'],
+                    'studentId' => $_POST['studentId'],
                     'cellNo' => $_POST['cellNo'],
                     'email' => $_POST['email'],
                     'nameOfInst' => $_POST['nameOfInst'],
@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 );
                 $userGroupId = "UG004";
                 $name = $_POST['name'];
-                $studentId = $_POST['stdId'];
+                $studentId = $_POST['studentId'];
                 $cellNo = $_POST['cellNo'];
                 $email = $_POST['email'];
                 $nameOfInst = $_POST['nameOfInst'];
@@ -92,28 +92,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 //$perPhoto = $perPhoto;
                 $admitDate = $dateNow;
                 $isActive = 'Y';
-                if($dob < '1994-01-01' || $dob > date('Y-m-d'){
-                    $msg = "Enter valid DOB";
+                if($handyCam->parseAppDate($_POST['dob']) > date('Y-m-d')){
+                    if($handyCam->parseAppDate($_POST['doj']) > date('1998-01-01')){
+                        if($handyCam->parseAppDate($_POST['doj']) < date('1994-01-01')){
+                   
+                            }   
+                                        }
+                    $msg = "Invalid DOB";
                 }
-                $sql = "INSERT into studentinfo(userId, userGroupId, name, studentId, cellNo, email, nameofInst, program, batchNo, gender, dob, bloodGroup, nationalId, nationality, passportNo, fatherName, motherName, fatherCellNo, motherCellNo, localGuardian, localGuradianCell, presentAddress, parmanentAddress, admitDate, isActive) VALUES('$userIds[1]', '$userGroupId', '$name', '$studentId', '$cellNo', '$email', '$nameofInst', '$program', '$batchNo', '$gender', '$dob', '$bloodGroup', '$nationalId', '$nationality', '$passportNo', '$fatherName', '$motherName', '$fatherCellNo', '$motherCellNo', '$localGuardian', '$localGuradianCell', '$presentAddress', '$parmanentAddress', '$admitDate', '$isActive')";
+                else {
+                try{
+                $sql = "INSERT into studentinfo(userId, userGroupId, name, studentId, cellNo, email, nameOfInst, program, batchNo, gender, dob, bloodGroup, nationalId, nationality, passportNo, fatherName, motherName, fatherCellNo, motherCellNo, localGuardian, localGuardianCell, presentAddress, parmanentAddress, admitDate, isActive) VALUES('$userIds[1]', '$userGroupId', '$name', '$studentId', '$cellNo', '$email', '$nameOfInst', '$program', '$batchNo', '$gender', '$dob', '$bloodGroup', '$nationalId', '$nationality', '$passportNo', '$fatherName', '$motherName', '$fatherCellNo', '$motherCellNo', '$localGuardian', '$localGuardianCell', '$presentAddress', '$parmanentAddress', '$admitDate', '$isActive')";
                 mysql_query($sql);
-                $result=mysql_insert_id().mysql_error();
-                //$result = $db->insertData("studentinfo",$data);
+                $result=mysql_insert_id().mysql_error();}
+                catch(Exception $e) {
+}
+               // $result = $db->insertData("studentinfo",$data);
                 if($result>=0) {
                     $userPass = md5("hms2015".$_POST['password']);
                     $data = array(
-                        'userId' => $userIds[1],
+                        'userId' => $_POST['name'],
                         'userGroupId' => "UG004",
                         'name' => $_POST['name'],
-                        'loginId' => $_POST['stdId'],
+                        'loginId' => $_POST['userId'],
                         'password' => $userPass,
                         'verifyCode' => "vhms2115",
                         'expireDate' => "2115-01-4",
                         'isVerifed' => 'Y'
                     );
                     $name = $_POST['name'];
-                    $loginId = $_POST['stdId'];
-                    $sql = "INSERT into users(userId, userGroupId, name, loginId, password, verifyCode, expireDate, isVerifed) VALUES('$userIds[1]', 'UG004', '$name', '$stdId', '$userPass', 'vhms2115', '2115-01-4', 'Y')";
+                    $loginId = $_POST['userId'];
+                    $sql = "INSERT into users( userGroupId, name, loginId, password, verifyCode, expireDate, isVerifed) VALUES('$userIds[1]', 'UG004', '$name', '$userId', '$userPass', 'vhms2115', '2115-01-4', 'Y')";
                     mysql_query($sql);
                     $result=mysql_insert_id().mysql_error();
                     if($result>0)
@@ -130,8 +139,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo '<script type="text/javascript"> alert("' . $result . '");</script>';
                     }
 
+
+                    }
                 }
-                elseif(strpos($result,'Duplicate') !== false)
+                if(strpos($result,'Duplicate') !== false)
                 {
                     echo '<script type="text/javascript"> alert("Student Already Exits!");</script>';
                 }
@@ -143,10 +154,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo '<script type="text/javascript"> alert("' . $msg . '");</script>';
         }
     }
-
-
-
-
 
 }
 
@@ -189,7 +196,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <div class="input-group">
 
                                                 <span class="input-group-addon"><i class="fa fa-info"></i> </span>
-                                                <input type="text" placeholder="Student Id" class="form-control" name="stdId" required>
+                                                <input type="text" placeholder="Student Id" class="form-control" name="studentId" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group ">
+                                            <label>User Id</label>
+                                            <div class="input-group">
+
+                                                <span class="input-group-addon"><i class="fa fa-info"></i> </span>
+                                                <input type="text" placeholder="Student Id" class="form-control" name="userId" required>
                                             </div>
                                         </div>
                                     </div>
