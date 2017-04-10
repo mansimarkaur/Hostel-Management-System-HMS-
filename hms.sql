@@ -138,9 +138,7 @@ CREATE TABLE IF NOT EXISTS `cost` (
 -- Dumping data for table `cost`
 --
 
-INSERT INTO `cost` (`serial`, `type`, `amount`, `date`, `description`) VALUES
-(4, 'Bazar', 2000.00, '2015-02-27', '2days Meal bazar'),
-(5, 'Net bill', 5000.00, '2015-04-18', 'BTCL Internet Connection Bill');
+
 
 -- --------------------------------------------------------
 
@@ -226,19 +224,16 @@ INSERT INTO `feesinfo` (`serial`, `type`, `description`, `amount`) VALUES
 
 CREATE TABLE IF NOT EXISTS `meal` (
   `serial` int(11) NOT NULL,
-  `userId` varchar(10) NOT NULL,
-  `noOfMeal` int(11) NOT NULL,
-  `date` date NOT NULL
+  `Meal` varchar(10) NOT NULL,
+  `Time` int(11) NOT NULL,
+  `day` varchar(10) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `meal`
 --
 
-INSERT INTO `meal` (`serial`, `userId`, `noOfMeal`, `date`) VALUES
-(9, 'U009', 3, '2015-02-27'),
-(10, 'U008', 2, '2015-02-27'),
-(11, 'U009', 2, '2015-04-17');
+
 
 -- --------------------------------------------------------
 
@@ -256,7 +251,7 @@ CREATE TABLE IF NOT EXISTS `mealrate` (
 --
 
 INSERT INTO `mealrate` (`rate`, `note`) VALUES
-(80.00, 'Feb,2015');
+(100.00, 'Feb,2017');
 
 -- --------------------------------------------------------
 
