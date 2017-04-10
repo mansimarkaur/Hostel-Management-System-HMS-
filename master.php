@@ -48,13 +48,7 @@ $name=$ses->Get("name");
     <link href="<?php echo $base_url;?>dist/css/custom_2.css" rel="stylesheet" type="text/css">
     <link href="<?php echo $base_url;?>dist/css/app.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+   
 </head>
 
 <body>
@@ -103,135 +97,100 @@ $name=$ses->Get("name");
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
                     <li>
-                        <a href="<?php echo $base_url.'dashboard.php';?>"><i class="fa fa-2x fa-dashboard fa-fw"></i> Dashboard</a>
+                        <a href="<?php echo $base_url.'dashboard.php';?>"><i class="fa fa-2x fa-dashboard fa-fw"></i> <p class="text-success">Dashboard</p></a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-file-text fa-fw"></i>Attendence<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-file-text fa-fw"></i> <p class="text-success">Attendence Record</p></a>
                         <ul class="nav nav-second-level">
+                            
                             <li>
-                                <a href="<?php echo $base_url.'ui/attendence/add.php'?>">Add Attendence</a>
+                                <a href="<?php echo $base_url.'ui/attendence/list.php'?>"> <p class="text-success">Attendence List View</p></a>
                             </li>
                             <li>
-                                <a href="<?php echo $base_url.'ui/attendence/list.php'?>">Attendence List View</a>
-                            </li>
-                            <li>
-                                <a href="<?php echo $base_url.'ui/attendence/view.php'?>">Attendence View</a>
+                                <a href="<?php echo $base_url.'ui/attendence/view.php'?>"> <p class="text-success">Attendence View</p></a>
                             </li>
 
                         </ul>
                     </li>
+                    
                     <li>
-                        <a href="#"><i class="fa fa-maxcdn fa-fw"></i>Meal Manage<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-money fa-fw"></i> <p class="text-success">Costs</p></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo $base_url.'ui/meal/add.php'?>">Add New</a>
+                                <a href="<?php echo $base_url.'ui/cost/add.php'?>"> <p class="text-success">Add New</p></a>
                             </li>
                             <li>
-                                <a href="<?php echo $base_url.'ui/meal/view.php'?>">List View</a>
-                            </li>
-
-
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-money fa-fw"></i>Cost Manage<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="<?php echo $base_url.'ui/cost/add.php'?>">Add New</a>
-                            </li>
-                            <li>
-                                <a href="<?php echo $base_url.'ui/cost/view.php'?>">List View</a>
+                                <a href="<?php echo $base_url.'ui/cost/view.php'?>"> <p class="text-success">List View</p></a>
                             </li>
 
 
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-users fa-fw"></i>Students Manage<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-user fa-fw"></i> <p class="text-success">Student Info</p></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo $base_url.'ui/studentManage/admission.php'?>">Admission</a>
+                                <a href="<?php echo $base_url.'ui/studentManage/admission.php'?>"> <p class="text-success">Admission</p></a>
                             </li>
                             <li>
-                                <a href="<?php echo $base_url.'ui/studentManage/studentlist.php'?>">Student List</a>
+                                <a href="<?php echo $base_url.'ui/studentManage/studentlist.php'?>"> <p class="text-success">Student List</p></a>
                             </li>
 
                             <li>
-                                <a href="<?php echo $base_url.'ui/studentManage/deposit.php'?>">Deposit</a>
+                                <a href="<?php echo $base_url.'ui/studentManage/deposit.php'?>"> <p class="text-success">Deposit</p></a>
                             </li>
                             <li>
-                                <a href="<?php echo $base_url.'ui/studentManage/seatalocation.php'?>">Seat Alocation</a>
+                                <a href="<?php echo $base_url.'ui/studentManage/seatalocation.php'?>"> <p class="text-success">Seat Alocation</p></a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-money fa-fw"></i>Students Payment<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-money fa-fw"></i> <p class="text-success">Student Payments via</p></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo $base_url.'ui/stdpayment/add.php'?>">Add</a>
-                            </li>
-                            <li>
-                                <a href="<?php echo $base_url.'ui/stdpayment/approvallist.php'?>">Approval List</a>
+                                <a href="<?php echo $base_url.'ui/stdpayment/add.php'?>"> <p class="text-success">Add</p></a>
                             </li>
 
                             <li>
-                                <a href="<?php echo $base_url.'ui/stdpayment/view.php'?>">View</a>
+                                <a href="<?php echo $base_url.'ui/stdpayment/view.php'?>"> <p class="text-success">View</p></a>
                             </li>
 
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-users fa-fw"></i>Employee Manage<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-users fa-fw"></i> <p class="text-success">Employee Info</p></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo $base_url.'ui/employee/add.php'?>">Add New</a>
+                                <a href="<?php echo $base_url.'ui/employee/add.php'?>"> <p class="text-success">Add New</p></a>
                             </li>
                             <li>
-                                <a href="<?php echo $base_url.'ui/employee/view.php'?>">List view</a>
-                            </li>
-
-                            <li>
-                                <a href="<?php echo $base_url.'ui/employee/salaryadd.php'?>">Salary Add</a>
-                            </li>
-                            <li>
-                                <a href="<?php echo $base_url.'ui/employee/salaryview.php'?>">Salary View</a>
-                            </li>
-
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-dollar fa-fw"></i>Vendor Payment<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="<?php echo $base_url.'ui/payment/create.php'?>">Add New</a>
-                            </li>
-                            <li>
-                                <a href="<?php echo $base_url.'ui/payment/view.php'?>">List View</a>
-                            </li>
-
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#"><i class="fa  fa-file-text fa-fw"></i>Bill Manage<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="<?php echo $base_url.'ui/bill/add.php'?>">Add New</a>
-                            </li>
-                            <li>
-                                <a href="<?php echo $base_url.'ui/bill/view.php'?>">List View</a>
+                                <a href="<?php echo $base_url.'ui/employee/view.php'?>"> <p class="text-success">List view</p></a>
                             </li>
 
 
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-list-alt fa-fw"></i>Notice Board<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-dollar fa-fw"></i> <p class="text-success">Payments to</p></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo $base_url.'ui/notice/create.php'?>">Notice Add/List</a>
+                                <a href="<?php echo $base_url.'ui/payment/create.php'?>"> <p class="text-success">Add New</p></a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $base_url.'ui/payment/view.php'?>"> <p class="text-success">List View</p></a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    
+                    <li>
+                        <a href="#"><i class="fa fa-list-alt fa-fw"></i><p class="text-success">Notice Board </p></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php echo $base_url.'ui/notice/create.php'?>"><p class="text-success">Notice Add/List</p></a>
                             </li>
 
 
@@ -239,34 +198,25 @@ $name=$ses->Get("name");
                         </ul>
                     </li>
 
-                    <li>
-                        <a href="#"><i class="fa fa-cog fa-fw"></i>Setting<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="<?php echo $base_url.'ui/setting/adduser.php'?>">System Admin User</a>
-                            </li>
-
-
-                        </ul>
-                    </li>
+                    
                     <li>
 
-                        <a href="#"><i class="fa fa-gears fa-fw"></i>Setup<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-gears fa-fw"></i><p class="text-success">General Info</p></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo $base_url.'ui/setup/fees.php'?>">Fees</a>
+                                <a href="<?php echo $base_url.'ui/setup/fees.php'?>"><p class="text-success">Fees</p></a>
                             </li>
                             <li>
-                                <a href="<?php echo $base_url.'ui/setup/mealrate.php'?>">Meal Rate</a>
+                                <a href="<?php echo $base_url.'ui/setup/mealrate.php'?>"><p class="text-success">Meal Rate</p></a>
                             </li>
                             <li>
-                                <a href="<?php echo $base_url.'ui/setup/timeset.php'?>">Time Set</a>
+                                <a href="<?php echo $base_url.'ui/setup/timeset.php'?>"><p class="text-success">Time Set</p></a>
                             </li>
                             <li>
-                                <a href="<?php echo $base_url.'ui/setup/block.php'?>">Blocks</a>
+                                <a href="<?php echo $base_url.'ui/setup/block.php'?>"><p class="text-success">Blocks</p></a>
                             </li>
                             <li>
-                                <a href="<?php echo $base_url.'ui/setup/room.php'?>">Rooms</a>
+                                <a href="<?php echo $base_url.'ui/setup/room.php'?>"><p class="text-success">Rooms</p></a>
                             </li>
 
                         </ul>
