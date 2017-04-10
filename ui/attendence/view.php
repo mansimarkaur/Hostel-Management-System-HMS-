@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $msg = $db->open();
         //echo '<script type="text/javascript"> alert("'.$msg.'");</script>';
         if ($msg = "true") {
-                $query = "UPDATE attendence SET remark=remark+1";
+                $query = "UPDATE attendence SET remark=remark+1 WHERE userId=".$_POST['person'];
                 $result=$db->update($query);
         }
 }}
