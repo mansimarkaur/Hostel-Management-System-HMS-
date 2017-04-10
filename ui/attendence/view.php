@@ -22,6 +22,29 @@ $loginGrp=$ses->Get("userGroupId");
 $display="";
 $displaytable="none";
 $GLOBALS['isData']="0";
+
+
+
+
+
+$msg="";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    if (isset($_POST["btn"])) {
+
+        $db = new \dbPlayer\dbPlayer();
+        $msg = $db->open();
+        //echo '<script type="text/javascript"> alert("'.$msg.'");</script>';
+        if ($msg = "true") {
+                $query = "UPDATE attendence SET remark=remark+1";
+                $result=$db->update($query);
+        }
+}}
+
+
+
+
+
 if($ses->isExpired())
 {
     header( 'Location:'.$base_url.'login.php');
@@ -171,11 +194,22 @@ else
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-1">
                                 <div class="form-group">
                                     <label>&nbsp;</label>
                                     <div>
                                         <button type="submit" class="btn btn-success" name="btnUpdate" ><i class="fa fa-check-circle-o"></i>View</button>
+                                    </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <div>
+                                        <button type="submit" class="btn btn-success" name="btn" ><i class="fa fa-check-circle-o"></i>Update</button>
+
                                     </div>
 
                             </div>
