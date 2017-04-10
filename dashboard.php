@@ -28,7 +28,7 @@ else
     if ($msg = "true") {
 
         $data = array();
-        $result = $db->getData("SELECT CASE WHEN COUNT(*)  is NULL THEN 0 ELSE COUNT(*) END as totals from studentinfo WHERE isActive='Y' UNION ALL SELECT CASE WHEN COUNT(*)  is NULL THEN 0 ELSE COUNT(*) END as totalE from employee WHERE isActive='Y' UNION ALL  SELECT CASE WHEN COUNT(*)  is NULL THEN 0 ELSE COUNT(*) END  as totalRoom from rooms where isActive='Y' UNION ALL SELECT CASE WHEN SUM(noOfMeal) IS NULL THEN 0 ELSE SUM(noOfMeal) end from meal WHERE DATE(date)=DATE(NOW())");
+        $result = $db->getData("SELECT CASE WHEN COUNT(*)  is NULL THEN 0 ELSE COUNT(*) END as totals from studentinfo WHERE isActive='Y' UNION ALL SELECT CASE WHEN COUNT(*)  is NULL THEN 0 ELSE COUNT(*) END as totalE from employee WHERE isActive='Y' UNION ALL  SELECT CASE WHEN COUNT(*)  is NULL THEN 0 ELSE COUNT(*) END  as totalRoom from rooms where isActive='Y'");
         $GLOBALS['totals']=array();
 
         if(false===strpos((string)$result,"Can't"))
@@ -60,18 +60,18 @@ else
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header titlehms"><i class="fa fa-hand-o-right"></i>Dashboard<i class="fa fa-hand-o-left"></i></h1>
+                <h1 class="page-header titlehms"><i></i>Dashboard<i></i></h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
 
         <div class="row">
             <div class="col-lg-3 col-md-6">
-                <div class="panel panel-primary">
+                <div>
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-3">
-                                <i class="fa fa-users fa-5x"></i>
+                                <i></i>
                             </div>
                             <div class="col-xs-9 text-right">
                                 <div class="huge"><?php echo   $GLOBALS['totals'][1];?></div>
@@ -89,15 +89,15 @@ else
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
-                <div class="panel panel-green">
+                <div>
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-3">
-                                <i class="fa fa-users fa-5x"></i>
+                                <i></i>
                             </div>
                             <div class="col-xs-9 text-right">
                                 <div class="huge"><?php echo   $GLOBALS['totals'][0];?></div>
-                                <div>Current Student</div>
+                                <div>Current Students</div>
                             </div>
                         </div>
                     </div>
@@ -111,11 +111,11 @@ else
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
-                <div class="panel panel-yellow">
+                <div>
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-3">
-                                <i class="fa fa-building fa-5x"></i>
+                                <i></i>
                             </div>
                             <div class="col-xs-9 text-right">
                                 <div class="huge"><?php echo   $GLOBALS['totals'][2];?></div>
@@ -133,25 +133,16 @@ else
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
-                <div class="panel panel-red">
+                <div>
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-3">
-                                <i class="fa fa-maxcdn fa-5x"></i>
+                                <i></i>
                             </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge"><?php echo   $GLOBALS['totals'][3];?></div>
-                                <div>Today's Meal</div>
-                            </div>
+                            
                         </div>
                     </div>
-                    <a href="./ui/meal/view.php">
-                        <div class="panel-footer">
-                            <span class="pull-left">View Details</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
+                   
                 </div>
             </div>
         </div>
