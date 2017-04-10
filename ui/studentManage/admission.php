@@ -67,7 +67,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'admitDate' => $dateNow,
                     'isActive' => 'Y'
                 );
-                $result = $db->insertData("studentinfo",$data);
+                $userId = $userIds[1];
+                $userGroupId = "UG004";
+                $name = $_POST['name'];
+                $studentId = $_POST['stdId'];
+                $cellNo = $_POST['cellNo'];
+                $email = $_POST['email'];
+                $nameOfInst = $_POST['nameOfInst'];
+                $program = $_POST['program'];
+                $batchNo = $_POST['batchNo'];
+                $gender = $_POST['gender'];
+                $dob = $handyCam->parseAppDate($_POST['dob']);
+                $bloodGroup = $_POST['bloodGroup'];
+                $nationality = $_POST['nationality'];
+                $nationalId = $_POST['nationalId'];
+                $passportNo = $_POST['passportNo'];
+                $fatherName = $_POST['fatherName'];
+                $motherName = $_POST['motherName'];
+                $fatherCellNo = $_POST['fatherCellNo'];
+                $motherCellNo = $_POST['motherCellNo'];
+                $localGuardian = $_POST['localGuardian'];
+                $localGuardianCell = $_POST['localGuardianCell'];
+                $presentAddress = $_POST['presentAddress'];
+                $parmanentAddress =$_POST['parmanentAddress'];
+                $perPhoto = $perPhoto;
+                $admitDate = $dateNow;
+                $isActive = 'Y';
+                $sql = "INSERT into studentinfo(userId, userGroupId, name, studentId, cellNo, email, nameofInst, program, batchNo, gender, dob, bloodGroup, nationalId, nationality, passportNo, fatherName, motherName, fatherCellNo, motherCellNo, localGuardian, localGuradianCell, presentAddress, permanentAddress, perPhoto, admitDate, isActive) VALUES('$userId', '$userGroupId', '$name', '$studentId', '$cellNo', '$email', '$nameofInst', '$program', '$batchNo', '$gender', '$dob', '$bloodGroup', '$nationalId', '$nationality', '$passportNo', '$fatherName', '$motherName', '$fatherCellNo', '$motherCellNo', '$localGuardian', '$localGuradianCell', '$presentAddress', '$permanentAddress', '$perPhoto', '$admitDate', '$isActive')";
+                mysql_query($sql);
+                $result=mysql_insert_id().mysql_error();
+                //$result = $db->insertData("studentinfo",$data);
                 if($result>=0) {
                     $userPass = md5("hms2015".$_POST['password']);
                     $data = array(
@@ -80,7 +109,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         'expireDate' => "2115-01-4",
                         'isVerifed' => 'Y'
                     );
-                    $result=$db->insertData("users",$data);
+                    $name = $_POST['name'];
+                    $loginId = $_POST['stdId'];
+                    $sql = "INSERT into users(userId, userGroupId, name, loginId, password, verifyCode, expireDate, isVerifed) VALUES('$userIds[1]', 'UG004', '$name', '$stdId', '$userPass', 'vhms2115', '2115-01-4', 'Y')";
+                    mysql_query($sql);
+                    $result=mysql_insert_id().mysql_error();
                     if($result>0)
                     {
                         $id =intval($userIds[0])+1;
