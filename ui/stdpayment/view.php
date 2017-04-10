@@ -82,7 +82,7 @@ else
             {
                 $ses->Set("UserIddrp",$ses->Get("userIdLoged"));
             }
-            printData($db);
+          
         }
         elseif (isset($_POST["btnUpdatePay"])) {
 
@@ -239,111 +239,6 @@ function getTableData($logGRP,$userId,$db)
 
 
 }
-function  printData($db)
-{
-    $ses = new \sessionManager\sessionManager();
-    $usId= $ses->Get("UserIddrp");
-    class PDF extends FPDF
-    {
-        function Header()
-        {
-            // Logo
-            $this->Image('./../../dist/images/logo.png',10,6,30,20);
-            $title="DIU HOSTEL";
-            $subtitle="4/2,Sobhanbag,Mirpur Road,Dhaka-1207";
-            $this->Cell(80);
-            // Arial bold 15
-            $this->SetFont('Arial','B',16);
-            // Calculate width of title and position
-            $w = $this->GetStringWidth($title)+6;
-            $this->SetX((210-$w)/2);
-
-            $this->SetTextColor(0,122,195);
-
-            $this->Cell($w,9,$title,0,1,'C');
-
-            $this->Cell(80);
-            // Arial bold 15
-            $this->SetFont('Arial','',12);
-            // Calculate width of title and position
-            $w = $this->GetStringWidth($subtitle)+6;
-            $this->SetX((210-$w)/2);
-
-            $this->SetTextColor(0,122,195);
-            $this->Cell($w,9,$subtitle,0,1,'C');
-        }
-
-// Page footer
-        function Footer()
-        {
-            // Position at 1.5 cm from bottom
-            $this->SetY(-15);
-            // Arial italic 8
-            $this->SetFont('Arial','B',8);
-            $this->SetTextColor(0);
-            // Page number
-            $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}     Print Date:'.date("d/m/Y"),0,0,'C');
-        }
-        function FancyTable($header, $data)
-        {
-            // Colors, line width and bold font
-            $this->SetFillColor(0,166,81);
-            $this->SetTextColor(255);
-            $this->SetDrawColor(128,0,0);
-            $this->SetLineWidth(.3);
-            $this->SetFont('','B');
-            // Header
-            $w = array(40,40,40,70);
-            for($i=0;$i<count($header);$i++)
-                $this->Cell($w[$i],7,$header[$i],1,0,'C',true);
-            $this->Ln();
-            // Color and font restoration
-            $this->SetFillColor(224,235,255);
-            $this->SetTextColor(0);
-            $this->SetFont('');
-            // Data
-            $fill = false;
-            foreach($data as $row)
-            {
-                $this->SetX(10);
-                $this->Cell($w[0],6,$row[0],'LR',0,'L',$fill);
-                $this->Cell($w[1],6,$row[1],'LR',0,'L',$fill);
-                $this->Cell($w[2],6,number_format($row[2]).'/-','LR',0,'R',$fill);
-                $this->Cell($w[3],6,$row[3],'LR',0,'L',$fill);
-
-                $this->Ln();
-                $fill = !$fill;
-            }
-            $this->SetX(10);
-            // Closing line
-            $this->Cell(array_sum($w),0,'','T');
-        }
-    }
-
-// Instanciation of inherited class
-    $pdf = new PDF('P', 'mm', 'A4');
-    $pdf->AliasNbPages();
-    $pdf->AddPage();
-    $pdf->SetFont('Times','',12);
-    $pdf->SetFillColor(200,220,255);
-    $pdf->SetTextColor(0,0,0);
-    $dataall =LoadData($db,$usId);
-    $billhead ="Payment By: ".$GLOBALS["Name"];
-    $w = $pdf->GetStringWidth($billhead)+4;
-    $pdf->SetLeftMargin(50);
-    $pdf->Cell($w,10,$billhead,0,1,'L',true);
-    $pdf->Ln(5);
-    $pdf->SetX(10);
-    $header = array('Payment Date', 'Payment By','Amount','Remark');
-   // $dataall =LoadData($db,$usId);
-    $pdf->SetFont('Arial','',14);
-    $pdf->FancyTable($header,$dataall);
-    $pdf->Output("payment.pdf");
-   echo '<script> window.open("payment.pdf", "_blank");</script>';
-
-   // header("location: payment.pdf");
-
-}
 function LoadData($db,$userId)
 {
     $query = "SELECT a.serial,b.name,a.transDate,a.paymentBy ,a.transNo,a.amount,a.remark,a.isApprove FROM stdpayment as a,studentinfo as b where a.userId='" . $userId . "' and a.userId=b.userId and b.isActive='Y'";
@@ -398,9 +293,7 @@ else
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <form name="apyment" action="view.php"  accept-charset="utf-8" method="post" enctype="multipart/form-data">
-                        <button type="submit" class="btn btn-info" style="display:<?php echo $disBtnPrint2;?>;" name="btnPrint" ><i class="fa fa-print"></i>Print</button>
-                    </form>
+                    
                     <form name="apyment" action="view.php"  accept-charset="utf-8" method="post" enctype="multipart/form-data">
                         <div class="row" id="divview" style="display:<?php echo $display;?>">
                             <div class="col-lg-12">
@@ -418,7 +311,7 @@ else
                                         <label>&nbsp;</label>
                                         <div>
                                             <button type="submit" class="btn btn-success" name="btnUpdate" ><i class="fa fa-check-circle-o"></i>View</button>
-                                            <button type="submit" class="btn btn-info" style="display:<?php echo $disBtnPrint;?>;" name="btnPrint" ><i class="fa fa-print"></i>Print</button>
+                                            
                                         </div>
 
                                     </div>
