@@ -132,11 +132,10 @@ else
                                         <tr>
 
                                             <th>Name</th>
-                                             <th>Attend Date</th>
+                                             
                                              <th>Is Absence</th>
                                              <th>Is Leave</th>
-                                             <th>Remark</th>
-                                              <th>Action</th>
+                                             <th>Attendance</th>
 
                                         </tr>
                                     </thead>
@@ -146,15 +145,13 @@ else
                     $GLOBALS['output'] .= "<tr>";
 
                     $GLOBALS['output'] .= "<td>" . $row['name'] . "</td>";
-                    $GLOBALS['output'] .= "<td>" .$handyCam->getAppDate($row['date']) . "</td>";
+                  
 
-                    $GLOBALS['output'] .= "<td>" . $row['isAbsence'] . "</td>";
+                    $GLOBALS['output'] .= "<td>" . $row['isAbsence'] ."</td>";
                     $GLOBALS['output'] .= "<td>" . $row['isLeave'] . "</td>";
                     $GLOBALS['output'] .= "<td>" . $row['remark'] . "</td>";
 
-                    $GLOBALS['output'] .= "<td><a title='Edit' class='btn btn-success btn-circle editBtn' href='#".$row['serial']."'><i class='fa fa-pencil'></i></a>&nbsp&nbsp<a title='Delete' class='btn btn-danger btn-circle' href='list.php?id=" . $row['serial'] ."&wtd=delete'"."><i class='fa fa-trash-o'></i></a></td>";
-
-                    $GLOBALS['output'] .= "</tr>";
+                   
 
                 }
 
@@ -188,92 +185,7 @@ else
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <i class="fa fa-info-circle fa-fw"></i>Student Attendence
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <form name="attendence" action="list.php?update=1"  accept-charset="utf-8" method="post" enctype="multipart/form-data">
-
-
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <label>Student Name</label>
-                                        <input id="name" type="text" placeholder="" class="form-control" name="person" disabled>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="form-group ">
-                                        <label>Attend Date</label>
-                                        <div class="input-group date" id='dp1'>
-
-                                            <span class="input-group-addon"><i class="fa fa-calendar"></i> </span>
-                                            <input id="attendDate" type="text" placeholder="Attend Date" disabled class="form-control datepicker" name="attendDate" required  data-date-format="dd/mm/yyyy">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <label>Is Absence</label>
-                                        <select id="abs" class="form-control" name="isabs" required="">
-
-                                            <option value="No">No</option>
-                                            <option value="Yes">Yes</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <label>Is Leave</label>
-                                        <select id="leave" class="form-control" name="isLeave" required="">
-
-                                            <option value="No">No</option>
-                                            <option value="Yes">Yes</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-2">
-                                    <div class="form-group ">
-                                        <label>Remark</label>
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="fa fa-info"></i> </span>
-                                            <input id="remark" type="text" placeholder="Additional Info" class="form-control" name="remark" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-
-
-
-
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="col-lg-5"></div>
-                                <div class="col-lg-2">
-                                    <div class="form-group ">
-                                        <button type="submit" class="btn btn-success" name="btnUpdate" ><i class="fa fa-2x fa-check"></i>Update</button>
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-5">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <!-- /.panel-body -->
-            </div>
+            
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -290,6 +202,8 @@ else
                     <div class="row">
                         <div class="col-lg-12">
                             <hr />
+                            
+                           
                             <?php if($GLOBALS['isData']=="1"){echo $GLOBALS['output'];}
                              else
                              {
@@ -328,6 +242,7 @@ else
             $('#abs').val($(this).closest("tr").find("td").eq('2').text());
             $('#leave').val($(this).closest("tr").find("td").eq('3').text());
             $('#remark').val($(this).closest("tr").find("td").eq('4').text());
+            $('#updates').val($(this).closest("tr").find("td").eq('5').text());
 
             $.ajax({
                 type: 'POST',
@@ -349,3 +264,13 @@ else
 
 
 </script>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>
