@@ -151,109 +151,8 @@ function getData()
     }
 
 }
-function  printData($db)
-{
-    $ses = new \sessionManager\sessionManager();
-    $usId= $ses->Get("UserIddrp");
-    class PDF extends FPDF
-    {
-        function Header()
-        {
-            // Logo
-            $this->Image('./../../dist/images/logo.png',10,6,30,20);
-              $title="HRS HOSTEL";
-            $subtitle="Localhost,Mirpur Road,Dhaka-1207";
-            $this->Cell(80);
-            // Arial bold 15
-            $this->SetFont('Arial','B',16);
-            // Calculate width of title and position
-            $w = $this->GetStringWidth($title)+6;
-            $this->SetX((210-$w)/2);
 
-            $this->SetTextColor(0,122,195);
 
-            $this->Cell($w,9,$title,0,1,'C');
-
-            $this->Cell(80);
-            // Arial bold 15
-            $this->SetFont('Arial','',12);
-            // Calculate width of title and position
-            $w = $this->GetStringWidth($subtitle)+6;
-            $this->SetX((210-$w)/2);
-
-            $this->SetTextColor(0,122,195);
-            $this->Cell($w,9,$subtitle,0,1,'C');
-        }
-
-// Page footer
-        function Footer()
-        {
-            // Position at 1.5 cm from bottom
-            $this->SetY(-15);
-            // Arial italic 8
-            $this->SetFont('Arial','B',8);
-            $this->SetTextColor(0);
-            // Page number
-            $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}     Print Date:'.date("d/m/Y"),0,0,'C');
-        }
-        function FancyTable($header, $data)
-        {
-            // Colors, line width and bold font
-            $this->SetFillColor(0,166,81);
-            $this->SetTextColor(255);
-            $this->SetDrawColor(128,0,0);
-            $this->SetLineWidth(.3);
-            $this->SetFont('','B');
-            // Header
-            $w = array(40,40,70);
-            for($i=0;$i<count($header);$i++)
-                $this->Cell($w[$i],7,$header[$i],1,0,'C',true);
-            $this->Ln();
-            // Color and font restoration
-            $this->SetFillColor(224,235,255);
-            $this->SetTextColor(0);
-            $this->SetFont('');
-            // Data
-            $fill = false;
-            foreach($data as $row)
-            {
-                $this->SetX(30);
-                $this->Cell($w[0],6,$row[0],'LR',0,'L',$fill);
-               $this->Cell($w[1],6,number_format($row[1]).'/-','LR',0,'R',$fill);
-                $this->Cell($w[2],6,$row[2],'LR',0,'L',$fill);
-
-                $this->Ln();
-                $fill = !$fill;
-            }
-            $this->SetX(30);
-            // Closing line
-            $this->Cell(array_sum($w),0,'','T');
-        }
-    }
-
-// Instanciation of inherited class
-    $pdf = new PDF('P', 'mm', 'A4');
-    $pdf->AliasNbPages();
-    $pdf->AddPage();
-    $pdf->SetFont('Times','',12);
-    $pdf->SetFillColor(200,220,255);
-    $pdf->SetTextColor(0,0,0);
-    $dataall =LoadData($db,$usId);
-    $billhead ="Meal Deposit List";
-    $w = $pdf->GetStringWidth($billhead)+4;
-    $pdf->SetLeftMargin(80);
-    $pdf->Cell($w,10,$billhead,0,1,'L',true);
-    $pdf->Ln(5);
-    $pdf->SetX(30);
-    $header = array('Name','Amount','Date');
-    // $dataall =LoadData($db,$usId);
-    $pdf->SetFont('Arial','',14);
-    $pdf->FancyTable($header,$dataall);
-    $pdf->Output("deposit.pdf");
-    echo '<script> window.open("deposit.pdf", "_blank");</script>';
-    // header("location: payment.pdf");
-
-}
 function LoadData($db,$userId)
 {
     $query = "SELECT a.serial,b.name,a.amount,DATE_FORMAT(a.depositDate, '%D %M,%Y') as date from deposit as a, studentinfo as b where a.userId = b.userId and b.isActive='Y'";
@@ -342,13 +241,8 @@ function LoadData($db,$userId)
                     </form>
                     </div>
                 </div>
-                    <div class="row">
-                    <div class="col-lg-12">
-                        <form name="apyment" action="deposit.php"  accept-charset="utf-8" method="post" enctype="multipart/form-data">
-                            <button type="submit" class="btn btn-info pull-right"  name="btnPrint" ><i class="fa fa-print"></i>Print</button>
-                        </form>
-                        </div>
-                        </div>
+                    
+                    
                     <div class="row">
                         <div class="col-lg-12">
                             <hr />
