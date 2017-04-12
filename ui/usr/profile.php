@@ -63,8 +63,7 @@ else
                 array_push($data,$row['localGuardianCell']);
                 array_push($data,$row['presentAddress']);
                 array_push($data,$row['parmanentAddress']);
-                array_push($data,$row['perPhoto']);
-
+                
             }
         }
         else
@@ -108,18 +107,7 @@ else
         </div>
         <!-- /.panel-heading -->
         <div class="panel-body">
-            <div class="row">
-                <div class="col-lg-12">
-
-                        <div class="col-lg-4">
-                            </div>
-                        <div class="col-lg-4">
-                            <img src="./../../files/photos/<?php echo $data[21]?>" alt="Avatar" height="220px" class="img-responsive img-rounded proimg" >
-                        </div>
-                        <div class="col-lg-4">
-                        </div>
-                    </div>
-                </div>
+           
 
                <hr />
               <div class="row">
