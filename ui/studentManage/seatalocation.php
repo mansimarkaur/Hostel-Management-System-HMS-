@@ -94,19 +94,26 @@ if ($msg = "true") {
 
     //load student list
     $data = array();
-    $result = $db->getData("SELECT userId,name FROM studentinfo  where isActive='Y' and userId NOT IN (SELECT userId FROM seataloc) ");
+    $result = $db->getData(" SELECT userId,name FROM studentinfo  where isActive='Y' and userId NOT IN (SELECT userId FROM seataloc)");
+
+
+    $a1 = $db->getData(" INSERT INTO checks SELECT userId,name FROM studentinfo  where isActive='Y' and userId NOT IN (SELECT userId FROM seataloc)");
+    $b1 = $db->getData("SELECT DISTINCT ID, sname from checks where ID IN (SELECT userId from deposit)");
+    //echo $b1;
+
+
 
     $GLOBALS['output'] = '';
-    if (false === strpos((string)$result, "Can't")) {
-        while ($row = mysql_fetch_array($result)) {
+    if (false === strpos((string)$b1, "Can't")) {
+        while ($row = mysql_fetch_array($b1)) {
             $GLOBALS['isData'] = "1";
-            $GLOBALS['output'] .= '<option value="' . $row['userId'] . '">' . $row['name'] . '</option>';
+            $GLOBALS['output'] .= '<option value="' . $row['ID'] . '">' . $row['sname'] . '</option>';
 
         }
 
 
     } else {
-        echo '<script type="text/javascript"> alert("' . $result . '");</script>';
+        echo '<script type="text/javascript"> alert("' . $b1 . '");</script>';
     }
     $data = array();
     $result = $db->getData("SELECT blockId,blockNo FROM blocks  where isActive='Y'");
