@@ -25,7 +25,8 @@ else
 
     //load student list
     $data = array();
-    $result = $db->getData("SELECT userId,name FROM studentinfo  where isActive='Y'");
+    $query = "SELECT userId,name FROM studentinfo  where isActive='Y' and userId NOT IN(SELECT userId from deposit)";
+    $result = mysql_query($query);
     $GLOBALS['output']='';
     if(false===strpos((string)$result,"Can't"))
     {
@@ -39,6 +40,7 @@ else
 
 
     }
+
     else
     {
         echo '<script type="text/javascript"> alert("' . $result . '");</script>';
@@ -64,6 +66,21 @@ else
 
                 );
                 $result = $db->insertData("deposit",$data);
+                $query = "SELECT userId,name FROM studentinfo  where isActive='Y' and userId NOT IN(SELECT userId from deposit)";
+    $results = mysql_query($query);
+    $GLOBALS['output']='';
+    if(false===strpos((string)$results,"Can't"))
+    {
+        while ($row = mysql_fetch_array($results)) {
+            $GLOBALS['isData']="1";
+            $GLOBALS['output'] .= '<option value="'.$row['userId'].'">'.$row['name'].'</option>';
+
+        }
+
+
+
+
+    }
 
                 if($result>=0)
                 {
