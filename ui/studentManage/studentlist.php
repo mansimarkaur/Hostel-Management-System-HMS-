@@ -37,6 +37,7 @@ else
                                 <table id="studentList" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
+                                            <th> userId </th>
                                             <th>Name</th>
                                             <th>Mobile No</th>
                                             <th>Institute</th>
@@ -52,7 +53,7 @@ else
             while ($row = mysql_fetch_array($result)) {
                 $GLOBALS['isData']="1";
                 $GLOBALS['output'] .= "<tr>";
-
+                $GLOBALS['output'] .= "<td>" . $row['userId'] . "</td>";
                 $GLOBALS['output'] .= "<td>" . $row['name'] . "</td>";
                 $GLOBALS['output'] .= "<td>" . $row['cellNo'] . "</td>";
                 $GLOBALS['output'] .= "<td>" . $row['nameOfInst'] . "</td>";
