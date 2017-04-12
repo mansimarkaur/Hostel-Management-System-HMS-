@@ -1,5 +1,6 @@
 <?php
 
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 $GLOBALS['title']="Employee-HMS";
 $base_url="http://localhost/hms/";
 
@@ -56,9 +57,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'perPhoto' => $perPhoto,
                     'isActive' => 'Y'
                 );
-                if($handyCam->parseAppDate($_POST['doj']) > date('1998-01-01')){
+                if($handyCam->parseAppDate($_POST['doj']) > date('Y-m-d')){
                     $msg = "Invalid DOB";
                 }
+                else if($handyCam->parseAppDate(($_POST['dob']) > date('Y-m-d'))&& $handyCam->parseAppDate(($_POST['dob']) < date('1994-01-01'))){
+                    $msg = "Invalid DOB";
+                }
+                if((!preg_match("/[0-9]{10}/",$cellNo)) )
+               {
+                 $msg = "Please enter a valid 10 digit mobile number"; 
+               } 
+               else if($cellNo>10000000000 )
+               {
+                 $msg = "Please enter 10 digit mobile number"; 
+               } 
                 else{
                 $result = $db->insertData("employee",$data);
                 if($result>0) {
