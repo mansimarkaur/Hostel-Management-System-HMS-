@@ -3,6 +3,7 @@
 $GLOBALS['title']="Seat-HMS";
 $base_url="http://localhost/hms/";
 
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
 
@@ -29,7 +30,6 @@ else
 
             if ($msg = "true") {
 
-
                 $data = array(
                     'userId' => $_POST['person'],
                     'monthlyRent' => floatval($_POST['mrent']),
@@ -38,9 +38,25 @@ else
 
 
                 );
-                $result = $db->insertData("seataloc",$data);
+                $userId = $_POST['person'];
+                $monthlyRent = floatval($_POST['mrent']);
+                $blockNo = $_POST['blockNo'];
+                $roomNo = $_POST['roomNo'];
+                $query = "INSERT INTO seataloc(userId, roomNo, blockNo, monthlyRent) VALUES('$userId','$roomNo','$blockNo','$monthlyRent')";
+                $result = mysql_query($query);
+                //$result = $db->insertData("seataloc",$data);
+                if($result > 0){
+                $b = "UPDATE rooms SET occupants=occupants+1 WHERE roomNo='$roomNo'and blockId='$blockNo'";
+                mysql_query($b);
+                $b = "SELECT noOfSeat, occupants FROM rooms WHERE roomNo='$roomNo'and blockId='$blockNo'";
+                $res = mysql_query($b);
+                if((int)$res['occupants'] >= (int)$res['noOfSeat']){
+                    $b = "UPDATE rooms SET isActive='N' WHERE roomNo='$roomNo'and blockId='$blockNo'";
+                    mysql_query($b);
+                }
+            }
 
-                if($result>=0)
+                if($result>0)
                 {
 
                     echo '<script type="text/javascript"> alert("Seat Alocation Successfull.");</script>';
@@ -78,7 +94,8 @@ if ($msg = "true") {
 
     //load student list
     $data = array();
-    $result = $db->getData("SELECT userId,name FROM studentinfo  where isActive='Y'");
+    $result = $db->getData("SELECT userId,name FROM studentinfo  where isActive='Y' and userId NOT IN (SELECT userId FROM seataloc) ");
+
     $GLOBALS['output'] = '';
     if (false === strpos((string)$result, "Can't")) {
         while ($row = mysql_fetch_array($result)) {
