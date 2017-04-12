@@ -2,7 +2,7 @@
 
 $GLOBALS['title']="Admission-HMS";
 $base_url="http://localhost/hms/";
-
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
 require('./../../inc/fileUploader.php');
@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'nameOfInst' => $_POST['nameOfInst'],
                     'program' => $_POST['program'],
                     'batchNo' => $_POST['batchNo'],
-                    'gender' => $_POST['gender'],
+                    //'gender' => $_POST['gender'],
                     'dob' => $handyCam->parseAppDate($_POST['dob']),
                     'bloodGroup' => $_POST['bloodGroup'],
                     'nationality' => $_POST['nationality'],
@@ -69,13 +69,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 );
                 $userGroupId = "UG004";
                 $name = $_POST['name'];
+                $userId = $_POST['userId'];
                 $studentId = $_POST['studentId'];
                 $cellNo = $_POST['cellNo'];
                 $email = $_POST['email'];
                 $nameOfInst = $_POST['nameOfInst'];
                 $program = $_POST['program'];
                 $batchNo = $_POST['batchNo'];
-                $gender = $_POST['gender'];
+                $gender = 'Female';
                 $dob = $handyCam->parseAppDate($_POST['dob']);
                 $bloodGroup = $_POST['bloodGroup'];
                 $nationality = $_POST['nationality'];
@@ -93,16 +94,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $admitDate = $dateNow;
                 $isActive = 'Y';
                 if($handyCam->parseAppDate($_POST['dob']) > date('Y-m-d')){
-                    if($handyCam->parseAppDate($_POST['doj']) > date('1998-01-01')){
-                        if($handyCam->parseAppDate($_POST['doj']) < date('1994-01-01')){
-                   
-                            }   
-                                        }
                     $msg = "Invalid DOB";
                 }
+                if(!preg_match("/^[A-Za-z ]+$/",$name))
+                {
+                    $msg = "Invalid Name"; 
+                }
+               else if(!preg_match("/[0-9]{4}\-[0-9]{2}\-[0-9]{2}/",$dob))
+               {
+                 $msg = "Date of Birth should be in (yyyy-mm-dd)"; 
+               } 
+               
+              else if((!preg_match("/[0-9]{10}/",$cellNo)) || (!preg_match("/[0-9]{10}/",$fatherCellNo)) || (!preg_match("/[0-9]{10}/",$motherCellNo)) ||(!preg_match("/[0-9]{10}/",$localGuardianCell)))
+               {
+                 $msg = "Please enter a valid 10 digit mobile number"; 
+               } 
+               else if($cellNo>10000000000 || $fatherCellNo>10000000000 || $motherCellNo>10000000000 || $localGuardianCell>10000000000)
+               {
+                 $msg = "Please enter 10 digit mobile number"; 
+               } 
                 else {
                 try{
-                $sql = "INSERT into studentinfo(userId, userGroupId, name, studentId, cellNo, email, nameOfInst, program, batchNo, gender, dob, bloodGroup, nationalId, nationality, passportNo, fatherName, motherName, fatherCellNo, motherCellNo, localGuardian, localGuardianCell, presentAddress, parmanentAddress, admitDate, isActive) VALUES('$userIds[1]', '$userGroupId', '$name', '$studentId', '$cellNo', '$email', '$nameOfInst', '$program', '$batchNo', '$gender', '$dob', '$bloodGroup', '$nationalId', '$nationality', '$passportNo', '$fatherName', '$motherName', '$fatherCellNo', '$motherCellNo', '$localGuardian', '$localGuardianCell', '$presentAddress', '$parmanentAddress', '$admitDate', '$isActive')";
+                $sql = "INSERT into studentinfo(userId, userGroupId, name, studentId, cellNo, email, nameOfInst, program, batchNo, gender, dob, bloodGroup, nationalId, nationality, passportNo, fatherName, motherName, fatherCellNo, motherCellNo, localGuardian, localGuardianCell, presentAddress, parmanentAddress, admitDate, isActive) VALUES('$userId', '$userGroupId', '$name', '$studentId', '$cellNo', '$email', '$nameOfInst', '$program', '$batchNo', '$gender', '$dob', '$bloodGroup', '$nationalId', '$nationality', '$passportNo', '$fatherName', '$motherName', '$fatherCellNo', '$motherCellNo', '$localGuardian', '$localGuardianCell', '$presentAddress', '$parmanentAddress', '$admitDate', '$isActive')";
                 mysql_query($sql);
                 $result=mysql_insert_id().mysql_error();}
                 catch(Exception $e) {
@@ -111,18 +124,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if($result>=0) {
                     $userPass = md5("hms2015".$_POST['password']);
                     $data = array(
-                        'userId' => $_POST['name'],
+                        'userId' => $_POST['userId'],
                         'userGroupId' => "UG004",
                         'name' => $_POST['name'],
-                        'loginId' => $_POST['userId'],
+                        'loginId' => $_POST['cellNo'],
                         'password' => $userPass,
                         'verifyCode' => "vhms2115",
                         'expireDate' => "2115-01-4",
                         'isVerifed' => 'Y'
                     );
+                    $userId = $_POST['userId'];
                     $name = $_POST['name'];
-                    $loginId = $_POST['userId'];
-                    $sql = "INSERT into users( userGroupId, name, loginId, password, verifyCode, expireDate, isVerifed) VALUES('$userIds[1]', 'UG004', '$name', '$userId', '$userPass', 'vhms2115', '2115-01-4', 'Y')";
+                    $loginId = $_POST['cellNo'];
+                    $sql = "INSERT into users( userId,userGroupId, name, loginId, password, verifyCode, expireDate, isVerifed) VALUES('$userId', 'UG004', '$name', '$loginId', '$userPass', 'vhms2115', '2115-01-4', 'Y')";
                     mysql_query($sql);
                     $result=mysql_insert_id().mysql_error();
                     if($result>0)
@@ -141,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
                     }
-                }
+                
                 if(strpos($result,'Duplicate') !== false)
                 {
                     echo '<script type="text/javascript"> alert("Student Already Exits!");</script>';
@@ -150,7 +164,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 {
                     echo '<script type="text/javascript"> alert("' . $result . '");</script>';
                 }
-        } else {
+         }
+     }
+         else {
             echo '<script type="text/javascript"> alert("' . $msg . '");</script>';
         }
     }
@@ -304,7 +320,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <!-- <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Gender</label>
                                             <select class="form-control" name="gender" required="">
@@ -313,7 +329,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-lg-4">
                                         <div class="form-group ">
                                             <label>Date Of Birth</label>
