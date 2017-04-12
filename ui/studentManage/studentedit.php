@@ -87,8 +87,25 @@ if (isset($_GET['id']) && $_GET['wtd']) {
 
                     'isVerifed' => 'N'
                 );
+                $u = $GLOBALS['userId'];
+                //echo $u;
+                $query = "SELECT roomNo, blockNo FROM seataloc WHERE userId = '$u'";
+                $res = mysql_query($query);
+
+                $r = $res['roomNo'];
+                $b = $res['blockNo'];
+                //echo $res['roomNo'], $b;
+                $query = "DELETE FROM seataloc WHERE userId = '$serialFor'";
+                mysql_query($query);
+                $query = "UPDATE rooms SET occupants=occupants-1 and isActive='Y' WHERE roomNo='$r' and blockId='$b'";
+                mysql_query($query);
+                $query = "DELETE FROM cost WHERE userId = '$u'";
+                mysql_query($query);
+                $query = "DELETE from studentinfo WHERE userId ='$u'";
+                mysql_query($query);
                 $result = $db->updateData("users", "userId",$serialFor,$data);
                 //  $db->close();
+
                 echo '<script type="text/javascript"> alert("Student deleted Successfully.");
                                 window.location.href = "studentlist.php";
                         </script>';
