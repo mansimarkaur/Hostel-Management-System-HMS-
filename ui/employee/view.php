@@ -1,6 +1,7 @@
 
 <?php
 
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 $GLOBALS['title']="Employe-HMS";
 $base_url="http://localhost/hms/";
 $GLOBALS['output']='';
