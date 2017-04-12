@@ -2,6 +2,7 @@
 $GLOBALS['title']="Employee-HMS";
 $base_url="http://localhost/hms/";
 
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
 require('./../../inc/fileUploader.php');
