@@ -8,13 +8,12 @@
  *
  */
 
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 $GLOBALS['title']="Attendence-HMS";
 $base_url="http://localhost/hms/";
-
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
 require('./../../inc/handyCam.php');
-
 $ses = new \sessionManager\sessionManager();
 $ses->start();
 $loginId=$ses->Get("userIdLoged");
@@ -22,54 +21,45 @@ $loginGrp=$ses->Get("userGroupId");
 $display="";
 $displaytable="none";
 $GLOBALS['isData']="0";
-
-
-
-
-
 $msg="";
+
+
+$pass = $_POST['password'];
+echo $pass;
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
     if (isset($_POST["btn"])) {
-
         $db = new \dbPlayer\dbPlayer();
         $msg = $db->open();
         //echo '<script type="text/javascript"> alert("'.$msg.'");</script>';
         if ($msg = "true") {
-                $query = "UPDATE attendence SET remark=remark+1 WHERE userId=".$_POST['person'];
-                $result=$db->update($query);
+                $a = $_POST['person'];
+                $query = "UPDATE attendence SET remark=remark+1 WHERE userId='$a'";
+               // echo $a;
+                mysql_query($query);
+                
         }
 }}
-
-
-
-
-
 if($ses->isExpired())
 {
     header( 'Location:'.$base_url.'login.php');
-
-
 }
 else
 {
     $db = new \dbPlayer\dbPlayer();
     $msg = $db->open();
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
         if (isset($_POST["btnUpdate"])) {
-
             getTableData($_POST['person'],$db);
             $displaytable="";
         }
     }
-
     if($loginGrp=="UG004"){
         getTableData($loginId,$db);
         $display="none";
         $displaytable="";
     }
-
     $result = $db->getData("SELECT userId,name FROM studentinfo  where isActive='Y'");
     $GLOBALS['output1']='';
     if(false===strpos((string)$result,"Can't"))
@@ -77,9 +67,7 @@ else
         while ($row = mysql_fetch_array($result)) {
             $GLOBALS['isData1']="1";
             $GLOBALS['output1'] .= '<option value="'.$row['userId'].'">'.$row['name'].'</option>';
-
         }
-
     }
     else
     {
@@ -88,54 +76,40 @@ else
 }
 function getTableData($userId,$db)
 {
-
     if ($msg = "true") {
         $handyCam = new \handyCam\handyCam();
         $data = array();
-
         $query="SELECT a.serial,b.name,a.date,a.isAbsence ,a.isLeave,a.remark FROM attendence as a,studentinfo as b where a.userId='".$userId."' and a.userId=b.userId and b.isActive='Y'";
         $result = $db->getData($query);
         $GLOBALS['output']='';
       // var_dump($result);
         if(false===strpos((string)$result,"Can't"))
         {
-
             $GLOBALS['output'].='<div class="table-responsive">
                                 <table id="attendenceList" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-
                                             <th>Name</th>
                                              <th>Attend Date</th>
                                              <th>Is Absence</th>
                                              <th>Is Leave</th>
                                              <th>Remark</th>
-
-
                                         </tr>
                                     </thead>
                                     <tbody>';
             while ($row = mysql_fetch_array($result)) {
                 $GLOBALS['isData']="1";
                 $GLOBALS['output'] .= "<tr>";
-
                 $GLOBALS['output'] .= "<td>" . $row['name'] . "</td>";
                 $GLOBALS['output'] .= "<td>" .$handyCam->getAppDate($row['date']) . "</td>";
-
                 $GLOBALS['output'] .= "<td>" . $row['isAbsence'] . "</td>";
                 $GLOBALS['output'] .= "<td>" . $row['isLeave'] . "</td>";
                 $GLOBALS['output'] .= "<td>" . $row['remark'] . "</td>";
-
-
                 $GLOBALS['output'] .= "</tr>";
-
             }
-
             $GLOBALS['output'].=  '</tbody>
                                 </table>
                             </div>';
-
-
         }
         else
         {
@@ -144,27 +118,18 @@ function getTableData($userId,$db)
     } else {
         echo '<script type="text/javascript"> alert("' . $msg . '");window.location="view.php";</script>';
     }
-
-
-
 }
-
 if($loginGrp==="UG004"){
-
     include('./../../smater.php');
-
 }
 elseif($loginGrp==="UG003")
-
 {
-
     include('./../../emaster.php');
 }
 else
 {
     include('./../../master.php');
 }
-
 ?>
 <div id="page-wrapper">
     <div class="row">
@@ -208,12 +173,28 @@ else
                                 <div class="form-group">
                                     <label>&nbsp;</label>
                                     <div>
-                                        <button type="submit" class="btn btn-success" name="btn" ><i class="fa fa-check-circle-o"></i>Update</button>
+                                      
+
+                                        <button type="submit" class="btn btn-success active" name="btn" <?php if ($pass == 'admin'){ ?> active <?php   } ?>)"> Update</button>
+
+
 
                                     </div>
 
                             </div>
                         </div>
+
+
+                        <div class="col-lg-2">
+                                        <div class="form-group ">
+                                            <label>password</label>
+                                            <div class="input-group">
+
+                                                <span class="input-group-addon"><i class="fa fa-info"></i> </span>
+                                                <input type="password" placeholder="" class="form-control" name="password" required>
+                                            </div>
+                                        </div>
+                                    </div>
 
                    </div>
                         </div>
@@ -246,12 +227,6 @@ else
 <?php include('./../../footer.php'); ?>
 <script type="text/javascript">
     $( document ).ready(function() {
-
         $('#attendenceList').dataTable();
-
     });
-
-
-
-
 </script>
