@@ -8,6 +8,8 @@
  *
  */
 
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+
 $GLOBALS['title']="Attendence-HMS";
 $base_url="http://localhost/hms/";
 
@@ -23,6 +25,7 @@ $display="";
 $displaytable="none";
 $GLOBALS['isData']="0";
 
+$pass = $_POST['password'];
 
 
 
@@ -36,8 +39,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $msg = $db->open();
         //echo '<script type="text/javascript"> alert("'.$msg.'");</script>';
         if ($msg = "true") {
-                $query = "UPDATE attendence SET remark=remark+1";
-                $result=$db->update($query);
+                $a = $_POST['person'];
+                $query = "UPDATE emp_att SET remark=remark+1 WHERE userId='$a'";
+                mysql_query($query);
         }
 }}
 
@@ -208,12 +212,23 @@ else
                                 <div class="form-group">
                                     <label>&nbsp;</label>
                                     <div>
-                                        <button type="submit" class="btn btn-success" name="btn" ><i class="fa fa-check-circle-o"></i>Update</button>
+                                        <button type="submit" class="btn btn-success active" name="btn" <?php if ($pass == 'admin'){ ?> active <?php   } ?>)"> Update</button>
+
 
                                     </div>
 
                             </div>
                         </div>
+                        <div class="col-lg-2">
+                                        <div class="form-group ">
+                                            <label>password</label>
+                                            <div class="input-group">
+
+                                                <span class="input-group-addon"><i class="fa fa-info"></i> </span>
+                                                <input type="password" placeholder="" class="form-control" name="password" required>
+                                            </div>
+                                        </div>
+                                    </div>
 
                    </div>
                         </div>
