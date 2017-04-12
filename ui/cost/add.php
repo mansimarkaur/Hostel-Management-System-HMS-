@@ -1,5 +1,6 @@
 <?php
 
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 $GLOBALS['title']="Cost-HMS";
 $base_url="http://localhost/hms/";
 
@@ -28,13 +29,19 @@ else
 
             if ($msg = "true") {
 
-
+                $name = $_POST['userId'];
+                //echo $name;
+                $q = "SELECT * FROM studentinfo WHERE userId = '$name'";
+                $res = mysql_query($q);
+                if(mysql_num_rows($res) == 0){
+                     echo '<script type="text/javascript"> alert("Student does not exist");</script>';
+                }else{
                 $amount = (float)$_POST['amount'];
                 $data = array(
                     'type' => $_POST['type'],
                     'amount' => floatval($_POST['amount']),
                     'date' =>date("Y-m-d"),
-
+                    'userId' => $name,
                     'description' => $_POST['description']
 
                 );
@@ -54,7 +61,7 @@ else
                 {
                     echo '<script type="text/javascript"> alert("' . $result . '");</script>';
                 }
-
+            }
             }
             else
             {
@@ -71,7 +78,7 @@ else
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header titlehms"><i class="fa fa-hand-o-right"></i>Cost Add</h1>
+            <h1 class="page-header titlehms"><i class="fa fa-hand-o-right"></i>Fine Add</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -80,7 +87,7 @@ else
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-info-circle fa-fw"></i>Hostel Cost Add Information
+                    <i class="fa fa-info-circle fa-fw"></i>Hostel Fines Add Information
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -110,12 +117,22 @@ else
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label>Description</label>
+                                    <div class="form-group ">
+                                        <label>user ID</label>
                                         <div class="input-group">
 
                                             <span class="input-group-addon"><i class="fa fa-info"></i> </span>
-                                            <input type="text" placeholder="Description" class="form-control" name="description">
+                                            <input type="text" placeholder="userId" class="form-control" name="userId" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <div class="input-group">
+
+                                            <span class="input-group-addon"><i class="fa fa-info"></i> </span>
+                                            <input type="text" placeholder="Name" class="form-control" name="description">
                                         </div>
                                     </div>
                                 </div>
