@@ -1,8 +1,8 @@
 <?php
-
 $GLOBALS['title']="Employee-HMS";
 $base_url="http://localhost/hms/";
 
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 require('./../../inc/sessionManager.php');
 require('./../../inc/dbPlayer.php');
 require('./../../inc/fileUploader.php');
@@ -12,22 +12,14 @@ $ses->start();
 if($ses->isExpired())
 {
     header( 'Location:'.$base_url.'login.php');
-
-
 }
 else
 {
     $name=$ses->Get("loginId");
-
-
 }
-
-
 $msg="";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
     if (isset($_POST["btnSave"])) {
-
         $db = new \dbPlayer\dbPlayer();
         $msg = $db->open();
         //echo '<script type="text/javascript"> alert("'.$msg.'");</script>';
@@ -80,7 +72,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if($result>=0)
                     {
                         $id =intval($userIds[0])+1;
-
                         $query="UPDATE auto_id set number=".$id." where prefix='EMP';";
                         $result=$db->update($query);
                        // $db->close();
@@ -90,7 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     {
                         echo '<script type="text/javascript"> alert("' . $result . '");</script>';
                     }
-
                 }
                 elseif(strpos($result,'Duplicate') !== false)
                 {
@@ -107,13 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo '<script type="text/javascript"> alert("' . $msg . '");</script>';
         }
     }
-
-
-
-
-
 }
-
 ?>
 <?php include('./../../master.php'); ?>
 <div id="page-wrapper">
@@ -336,26 +320,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <script type="text/javascript">
     $( document ).ready(function() {
         $('.datepicker').datepicker();
-
-
     });
     function checkForm(form) {
-
         var password = document.getElementById("password")
             , confirm_password = document.getElementById("rePassword");
         console.log(password.value);
         console.log(confirm_password.value);
         if(password.value != confirm_password.value) {
-
             $("#lblmsg").text("**Passwords Don't Match");
-
             return false;
         } else {
-
             return true;
         }
-
     }
-
-
 </script>
