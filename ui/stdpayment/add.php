@@ -62,6 +62,16 @@ else
 
 
                     );
+                    if($handyCam->parseAppDate($_POST['paydate']) > date('Y-m-d') || $handyCam->parseAppDate($_POST['paydate']) < '1990-01-01'){
+                        echo '<script type="text/javascript"> alert("Invalid date");window.location="add.php";</script>';
+                    }
+                    else if(!preg_match("/[0-9]{10}/",$_POST['transno']) || $_POST['transno'] >10000000000 ){
+                        echo '<script type="text/javascript"> alert("Invalid mobile num");window.location="add.php";</script>';
+                    }
+                        else if(floatval($_POST['amount'])<=0){
+                            echo '<script type="text/javascript"> alert("Invalid amt");window.location="add.php";</script>';
+                        }
+                    else{
                     $result = $db->insertData("stdpayment", $data);
 
                     if (is_numeric($result)) {
@@ -74,7 +84,7 @@ else
                     } else {
                         echo '<script type="text/javascript"> alert("' . $result . '");window.location="add.php";</script>';
                     }
-
+}
 
             }
             else

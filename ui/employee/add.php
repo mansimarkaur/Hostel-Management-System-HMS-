@@ -57,19 +57,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'perPhoto' => $perPhoto,
                     'isActive' => 'Y'
                 );
-                if($handyCam->parseAppDate($_POST['doj']) > date('Y-m-d')){
-                    $msg = "Invalid DOB";
+                $msg = "";
+                if(!preg_match("/^[A-Za-z ]+$/",$_POST['name'])){
+                    $msg .= "Invalid name";
                 }
-                else if($handyCam->parseAppDate(($_POST['dob']) > date('Y-m-d'))&& $handyCam->parseAppDate(($_POST['dob']) < date('1994-01-01'))){
-                    $msg = "Invalid DOB";
+                if(!preg_match("/^[A-Za-z ]+$/",$_POST['empType'])){
+                    $msg .= "Invalid empType";
                 }
+                if(!preg_match("/^[A-Za-z ]+$/",$_POST['designation'])){
+                    $msg .= "Invalid designation";
+                }
+                if($handyCam->parseAppDate($_POST['doj']) > date('Y-m-d') || $handyCam->parseAppDate($_POST['doj']) < date('1985-01-01') ){
+                    $msg .= "Invalid DOB";
+                }
+                if($handyCam->parseAppDate($_POST['dob']) > date('Y-m-d') && $handyCam->parseAppDate($_POST['dob']) < date('1965-01-01')){
+                    $msg .= "Invalid DOB";
+                }
+                if(substr($_POST['blockNo'], 0, 2) != 'BL' ){
+                    $msg .= "Please enter a valid block number"; 
+                }
+                if((!preg_match("/[0-9]{10}/",$salary)) )
+               {
+                 $msg .= "Please enter a valid salary"; 
+               } 
                 if((!preg_match("/[0-9]{10}/",$cellNo)) )
                {
-                 $msg = "Please enter a valid 10 digit mobile number"; 
+                 $msg .= "Please enter a valid 10 digit mobile number"; 
                } 
                else if($cellNo>10000000000 )
                {
-                 $msg = "Please enter 10 digit mobile number"; 
+                 $msg .= "Please enter 10 digit mobile number"; 
                } 
                 else{
                 $result = $db->insertData("employee",$data);

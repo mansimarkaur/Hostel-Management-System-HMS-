@@ -77,14 +77,17 @@ if (isset($_GET['id']) && $_GET['wtd']) {
         if ($msg = "true") {
 
             $u = $GLOBALS['userId'];
-            echo $u;
+           // echo $u;
             
             $q = "SELECT roomNo, blockNo FROM seataloc WHERE userId='$u'";
             $res = mysql_query($q);
-            echo $res['roomNo'], $res['blockNo'];
+           // echo var_dump($res);
+            //echo $res['roomNo']==null, $res['blockNo']==null;
             $r = $res['roomNo'];
             $b = $res['blockNo'];
-            $q = "UPDATE rooms SET occupants=occupants-1 and isActive='Y' WHERE roomNo ='$r' and blockId='$b'";
+            $q = "UPDATE rooms SET occupants=occupants-1 WHERE roomNo ='$r' and blockId='$b'";
+            mysql_query($q);
+            $q = "UPDATE rooms SET isActive='Y' WHERE roomNo ='$r' and blockId='$b'";
             mysql_query($q);
             $q = "delete from seataloc where userId='$u'";
             $result = mysql_query($q);

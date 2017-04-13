@@ -38,6 +38,16 @@ else
                     'description' => $_POST['description']
 
                 );
+                $p = 0;
+                if($_POST['amount'] <=0 ){
+                    $p = 1;
+                    echo '<script type="text/javascript"> alert("invalid amt.");</script>';
+               } 
+               if($_POST['paymentDate'] > date('Y-m-d') || $_POST['paymentDate'] < date('1985-01-01')){
+                $p = 1;
+                echo '<script type="text/javascript"> alert("invalid date.");</script>';
+               }
+               if(!$p){
                 $result = $db->insertData("payment",$data);
 
                 if($result>=0)
@@ -54,7 +64,7 @@ else
                 {
                     echo '<script type="text/javascript"> alert("' . $result . '");</script>';
                 }
-
+}
             }
             else
             {

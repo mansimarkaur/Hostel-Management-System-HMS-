@@ -117,11 +117,12 @@ if ($msg = "true") {
     }
     $data = array();
     $result = $db->getData("SELECT blockId,blockNo FROM blocks  where isActive='Y'");
+    //$res = $db->getData("SELECT roomId,roomNo FROM rooms  where isActive='Y'");
     $GLOBALS['output2'] = '';
     if (false === strpos((string)$result, "Can't")) {
         while ($row = mysql_fetch_array($result)) {
             $GLOBALS['isData2'] = "1";
-            $GLOBALS['output2'] .= '<option value="' . $row['blockNo'] . '">' . $row['blockNo'] . '</option>';
+            $GLOBALS['output2'] .= '<option value="' . $row['blockNo'] .'">' . $row['blockNo'] .' </option>';
 
         }
 
@@ -208,7 +209,7 @@ if ($msg = "true") {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-info-circle fa-fw"></i>Student's Seat Alocation
+                    <i class="fa fa-info-circle fa-fw"></i>Student's Seat Allocation
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">

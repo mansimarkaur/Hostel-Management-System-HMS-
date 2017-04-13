@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 //$perPhoto = $perPhoto;
                 $admitDate = $dateNow;
                 $isActive = 'Y';
-                if($handyCam->parseAppDate($_POST['dob']) > date('Y-m-d')){
+                if($handyCam->parseAppDate($_POST['dob']) > date('Y-m-d') || $handyCam->parseAppDate($_POST['dob']) < '1990-01-01'){
                     $msg = "Invalid DOB";
                 }
                 if(!preg_match("/^[A-Za-z ]+$/",$name))
